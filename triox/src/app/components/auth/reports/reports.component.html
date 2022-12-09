@@ -1,0 +1,184 @@
+<div class='container' *ngIf= "!isGenerate">
+  <div  >
+    <h2 class="h2"style="text-align: center;">Barcode Generator <span class="badge badge-secondary">code128</span></h2>
+  </div>
+  <div class="row jumbotron" style="background-color:rgba(111, 224, 139, 0.411);">
+    <div class="col-md-6" style="display: inline;border-right: 2px solid gray; padding:0 5px;">
+        
+      <!-- <div  class="img-fluid img-thumbnail">
+          <div [innerHTML]="new_svg" >
+          
+          </div>
+      </div> -->
+      <div   >
+        <img [src]="new_svg" class="center-block img-fluid img-thumbnail">    
+      </div>
+      <div class='row '>
+              
+              <div class="col-md-12"><input type="text" class = "form-control " name = "code" [value]="params" (keyup)="inputCode($event.target)"> </div>
+              
+      </div>
+      <br>
+      <div class="row ">
+          <div class="col-md-2" ><label>Width</label> </div>
+          <!-- <ngx-slider class="col-md-7" [(value)]="value" [options]="options"></ngx-slider> -->
+          <div class="col-md-9 slider-container"><input id="bar-width" type="range" name = "width" min="1" max="4" step="1" value="2"  (change)="inputCode($event.target)"/></div>
+          <div class="col-md-1" [innerHTML] ="code_options['width']"><p><label  ></label></p></div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-2"><label>Height</label></div>
+          <div class="col-md-9 slider-container"><input id="bar-height" type="range" name="height" min="10" max="150" step="1" value="100" (change)="inputCode($event.target)" /></div>
+          <div class="col-md-1 " [innerHTML] ="code_options['height']"><p><span id="bar-height-display"></span></p></div>
+        </div>
+        <div class="row">
+          <div class="col-md-2 "><label>Margins</label></div>
+          <div class="col-md-9 slider-container"><input id="bar-margin" type="range" name="margin"min="0" max="25" step="1" value="10" (change)="inputCode($event.target)"/></div>
+          <div class="col-md-1 " [innerHTML] ="code_options['margin']"><p><span id="bar-margin-display"></span></p></div>
+        </div>
+        <!-- <div class="row">
+          <div class="col-md-2 description-text"><label>Background</label></div>
+          <div class="col-md-7 input-container"><input id="background-color" name="background"class="form-control color" value="#FFFFFF" (change)="inputCode($event.target)"/></div>
+          <div class="col-md-1 value-text"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-2 description-text"><label>Line Color</label></div>
+          <div class="col-md-7 input-container"><input id="line-color" name="linecolor" class="form-control color" value="#000000" (change)="inputCode($event.target)"/></div>
+          <div class="col-md-1 value-text"></div>
+        </div> -->
+        <!-- <div class="row checkbox-options">
+          <div class="col-md-2 description-text"><label>Show Text</label></div>
+          <div class="col-md-7 center-text">
+            <div class="btn-group btn-group-md" role="toolbar">
+              <button type="button" class="btn btn-default btn-primary display-text" value="true" >Show</button>
+              <button type="button" class="btn btn-default display-text" value="false">Hide</button>
+            </div>
+          </div>
+          <div class="col-md-1 col-xs-0"></div>
+        </div> -->
+        <div id="font-options">
+          <div class="row">
+            <div class="col-md-2 description-text"><label>Font Size</label></div>
+            <div class="col-md-9 slider-container"><input id="bar-fontSize" name ="fontSize"type="range" min="8" max="36" step="1" value="36" (change)="inputCode($event.target)"/></div>
+            <div class="col-md-1 value-text" [innerHTML] ="code_options['fontSize']"><p><span id="bar-fontSize-display"></span></p></div>
+          </div>
+         
+          <div class="row">
+            <div class="col-md-2 description-text"><label>Text Margin</label></div>
+            <div class="col-md-9 slider-container"><input id="bar-text-margin" name="textMargin"type="range" min="-15" max="40" step="1" value="0" (change)="inputCode($event.target)"/></div>
+            <div class="col-md-1 value-text" [innerHTML] ="code_options['textMargin']"><p><span id="bar-text-margin-display"></span></p></div>
+          </div>
+          <div class="row checkbox-options">
+            <div class="col-md-2 description-text"><label>Text Align</label></div>
+            <div class="col-md-9 center-text">
+              <div class="btn-group btn-group-md" role="toolbar">
+                <button type="button" class="btn btn-default text-align" value="left" name="textAlign" (click)="inputCode($event.target)">Left</button>
+                <button type="button" class="btn btn-default text-align" value="center"name="textAlign" (click)="inputCode($event.target)">Center</button>
+                <button type="button" class="btn btn-default text-align" value="right" name="textAlign" (click)="inputCode($event.target)">Right</button>
+              </div>
+            </div>
+            <div class="col-md-1"></div>
+          </div>
+          <!-- <div class="row">
+             <div class="col-md-2 description-text"><label>Font</label></div> 
+            <div class="col-md-7 center-text">
+              <select class="form-control" id="font" style="font-family: monospace">
+                <option value="monospace" style="font-family: monospace" selected="selected">Monospace</option>
+                <option value="sans-serif" style="font-family: sans-serif">Sans-serif</option>
+                <option value="serif" style="font-family: serif">Serif</option>
+                <option value="fantasy" style="font-family: fantasy">Fantasy</option>
+                <option value="cursive" style="font-family: cursive">Cursive</option>
+              </select>
+            </div> 
+            <div class="col-md-1"></div>
+          </div> -->
+          <div class="row checkbox-options">
+            <div class="col-md-2  description-text"><label>Font Options</label></div>
+            <div class="col-md-9 center-text">
+              <div class="btn-group btn-group-md" role="toolbar">
+                <button type="button" class="btn btn-default font-option" name="fontOptions" value="bold" (click)="inputCode($event.target)"style="font-weight: bold">Bold</button>
+                <button type="button" class="btn btn-default font-option"name="fontOptions"  value="italic"(click)="inputCode($event.target)" style="font-style: italic">Italic</button>
+              </div>
+            </div>
+            <div class="col-md-1"></div>
+          </div>
+          
+
+        </div>
+  </div>
+
+  
+      <div class=' col-md-6'>
+          <div class="row">
+            <div class="col-md-12">
+              <h3 class="h3">Generate Bulk Codes</h3>
+            </div>
+          </div>
+
+          <form (ngSubmit) = "generateCodes(codes)" #codes = "ngForm">
+          <div class='row'>
+              <div class="col-md-4">
+                  <label>
+                      Starting code
+                  </label>
+              </div>
+              <div class='col-md-8'>
+                  <input type="text" #startcode ="ngModel" class = "form-control" name = "startcode" required ngModel [value]="startcode">
+                  <span *ngIf = "!startcode.valid && startcode.touched" style="color: red;">Starting Code Can't be Blank</span>
+              </div>
+          </div>
+          
+          <div class='row '>
+              <div class="col-md-4">
+                  <label>
+                      Ending code<span class="badge badge-secondary">Same series</span>
+                  </label>
+              </div>
+              <div class='col-md-8'>
+                  <input type="text" #endcode ="ngModel" class = "form-control" name = "endcode" required ngModel [value]="endcode">
+                  <span *ngIf = "!endcode.valid && endcode.touched" style="color: red;">Ending Code Can't be blank</span>
+              </div>
+              
+          </div>
+        
+          <div class='row'>
+              <div class='col-md-4'>
+                  <label>
+                      Truncate Characters
+                  </label>
+              </div>
+              <div class="col-md-3">
+                  <input type="number" #truncate ="ngModel" class = "form-control" name = "truncate" required ngModel value="0">
+                  <span *ngIf = "!truncate.valid && truncate.touched" style="color: red;">Required</span>
+              </div>
+              <div class='col-md-2' >
+                <label >
+                    Columns
+                </label>
+            </div>
+            <div class="col-md-3">
+                <input type="number" #cols ="ngModel" class = "form-control" name = "cols" required ngModel value="0">
+                <span *ngIf = "!cols.valid && cols.touched" style="color: red;">Required</span>
+                <!-- <select name="cols"  #cols ="ngModel"  ngModel [ngModel]="print_layout[5]" class="form-control" required >
+                  <option *ngFor  ="let layout of print_layout" [value] = "layout" >{{layout}}</option>
+                 </select> -->
+            </div>
+            
+              <div class="col-md-6">
+                  <button type="submit"  [disabled] = "!codes.valid" class="btn btn-primary">Generate</button>
+              </div>
+              
+          </div>
+
+          </form> 
+      </div>
+  </div>
+    
+        
+        
+</div>
+
+
+
+
+

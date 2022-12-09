@@ -1,0 +1,59 @@
+ 
+<div class="container">
+        <h3>Search</h3>
+        <form (ngSubmit)="onSearch(f)" #f ="ngForm">
+               <div class="row">
+                    <div class="col-md-4">
+                        <input type="text" ngModel name="name" placeholder="Search" class = "form-control">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" value="search" class="btn btn-primary"> <i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+               </div> 
+         </form>
+</div>
+
+<div class="container" *ngIf = "isSearch">
+        <h2>Results</h2>
+        <button class = "btn btn-danger"(click)= "onClear()">Clear Results</button>           
+        <table class="table table-hover table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Board Name</th>
+              <th>Device ID</th>
+              <th>MAC Address</th>
+              <th>WiFi</th>
+              <th>Vibrometer</th>
+              <th>Magnetometer</th>
+              <th>Accelerometer</th>
+              <th>Ultra-sound</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor ="let result of results" [ngClass]="{ 'followup': result['Customer Status'] ==='Need Follow-Up' ? true : false, 
+            'notconfirmed': result['Customer Status'] ==='Resolve Not Confirmed' ? true : false,  
+            'refund':result['Customer Status'] ==='Service on Hold' ? true : false,
+            'void':result['Customer Status'] ==='Voided' ? true : false   }">
+              <td><a [routerLink]="['/auth/show', result['_id']]">{{ result["Board Name"]}}</a>
+              </td>
+              <td><a [routerLink]="['/auth/show', result['_id']]">{{ result["Device ID"]}}</a> 
+              </td>
+              <td><a [routerLink]="['/auth/show', result['_id']]">{{ result["MAC ADDRESS:"]}}</a>
+              </td>
+              <td>{{ result["WiFi"]}}        
+              </td>
+              <td>{{ result["Vibrometer"]}}        
+              </td>
+              <td>{{ result["Magnetometer"]}}        
+              </td>
+              <td>{{ result["Accelerometer"]}}        
+              </td>
+              <td>{{ result["Ultra-sound"]}}        
+              </td>
+            </tr>  
+          </tbody>
+        </table>
+</div>
+
+
+  

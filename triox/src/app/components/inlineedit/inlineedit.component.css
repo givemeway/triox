@@ -1,0 +1,8 @@
+.fa.fa-pencil{
+    float: right;
+    display: none;
+   }
+   
+.inlineedit:hover .fa.fa-pencil{
+    display: block;
+}

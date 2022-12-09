@@ -1,0 +1,359 @@
+<a routerLink = "/auth/leads">
+        <i class="glyphicon glyphicon-arrow-left" aria-hidden="true" title ="Back to Customers" style = "font-size: 20px"></i>
+</a>
+        <div id = "customerOverView">
+            <div class="row well">
+                <div class="col-md-4">
+                    <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d" class="img-fluid"  alt="avatar">
+                </div>
+                <div class="col-md-8">
+                  <h3>{{results['Board Name']}}</h3>
+                </div>
+            </div>
+            <!-- <div class="row well">
+                <div class="col-md-4">
+                    <label>Customer Owner</label>
+                </div>
+                <div class="col-md-8">
+                   <span>{{results['Customer Owner ID']}} </span>
+                   <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+
+                </div>
+                
+            </div> -->
+            <div class="row well">
+                <div class="col-md-4">
+                    <label>Device ID</label>
+                </div>
+                <div class="col-md-8">
+
+                 <inlineedit [field] = "results['Device ID']" property="Device ID" [ParentID] = "params" (UpdatedCustomer) = "editDone($event)"></inlineedit>
+
+                </div>
+            </div>
+        </div>
+      <br>
+        <div class="jumbotron" id="customerInfo">
+            <div class="row well">
+                <div class="col-md-12">
+                    <h3>Device Test Information </h3>
+                </div>
+                    
+            </div>
+
+            <div class="row well">
+                <div class="col-md-2">
+                    <label>Test Time</label>
+                </div>
+                <div class="col-md-4">
+               
+                    <span *ngIf= "!(temp === results['Time'])">
+                          {{results['Time']}}
+                          <i class="fa fa-pencil" aria-hidden="true" title="Edit" (click) = "isEdited(results['Time'])" style ="cursor: pointer">  </i>
+   
+                       </span>
+                      <form *ngIf = "(temp === results['Time'])" (ngSubmit) = "editDone(e)" #e= "ngForm">
+                              <ngx-datepicker id="datePicker" [options]="options" [(ngModel)] = "date" name="Time"> </ngx-datepicker>
+                                  <button class ="btn btn-success"  type="submit" >Save</button>
+                                  <button class ="btn btn-danger" type="button" (click)="cancelEdit(results['Time'])" >Cancel</button>
+                      </form>
+                </div>
+                <div class="col-md-2">
+                  </div>
+                <div class="col-md-4">                        
+                </div> 
+
+            </div>
+            <div class="row well">
+                <div class="col-md-2">
+                    <label>PCBA Test Report</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                   <pre *ngIf = "!(temp === results['Output'])" style = "overflow: hidden; word-wrap: break-word; display:block; white-space:pre-wrap;">
+                          <i class="fa fa-pencil" aria-hidden="true" title="Edit" (click) = "isEdited(results['Output'])" style ="cursor: pointer">  </i>  
+                          <read-more [text]="results['Output']" [maxHeight]="100">  </read-more>
+                  </pre>
+                   <form *ngIf= "(temp === results['Output'])" (ngSubmit) = "editDone(l)" #l= "ngForm">
+                           <textarea type="text" [ngModel] = "results['Output']" name="Output" class="form-control" style="resize: vertical"></textarea>
+                           <button class ="btn btn-success"  type="submit" >Save</button>
+                           <button class ="btn btn-danger" type="button" (click)="cancelEdit(results['Output'])" >Cancel</button>
+                   </form>
+                </div>
+            </div> 
+
+        </div>
+            <h3>PCBA ASSEMBLY QC AND PRODUCT TEST CHECKLIST </h3>    
+            <div class="jumbotron" id="outputtable">
+                <table class="table table-hover table-bordered table-striped" cellpadding="0">
+                    <thead style="background-color: lightblue">
+                      <tr>
+                        <th>Sl No</th>
+                        <th>Features</th>
+                        <th>PASS/FAIL</th>
+                        <th>Remarks	</th>
+                        <th>Edit</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                            <tr  *ngFor="let field of otherfields">
+                            <!-- <tr  *ngFor="let field of otherfields" (dblclick)="onEdit(field,field.editFieldName)" > -->
+                                <td *ngIf="field.key !== field.editFieldName">{{field['Sl No']}}</td>
+                                <td *ngIf="field.key !== field.editFieldName">{{field['Features']}}</td>
+                                <td *ngIf="field.key !== field.editFieldName">{{field['PASS/FAIL']}}</td>
+                                <td *ngIf="field.key !== field.editFieldName">{{field['Remarks']}}</td>
+
+                                <td *ngIf="field.key == field.editFieldName">
+                                            <input type="text" [(ngModel)]="field['Sl No']" class="form-control"/>
+                                </td>
+                                <td *ngIf="field.key == field.editFieldName">
+                                            <input type="text" [(ngModel)]="field['Features']" class="form-control"/>
+                                </td>
+                                <td *ngIf="field.key == field.editFieldName">
+                                            <input type="text" [(ngModel)]="field['PASS/FAIL']" class="form-control"/>
+                                </td>
+                                <td *ngIf="field.key == field.editFieldName">
+                                            <input type="text" [(ngModel)]="field['Remarks']" class="form-control"/>
+                                </td>
+                                <td>
+                                    <i *ngIf="field.key !== field.editFieldName" class="fa fa-pencil-square-o fa-4px" aria-hidden="true" (click) ="onEdit(field,field.editFieldName)"></i>
+                                    <span  *ngIf="field.key == field.editFieldName" class="fa-stack" style="vertical-align: top;">
+                                            <i class="fa fa-check-circle-o fa-4px" aria-hidden="true" (click)="editDone(field)" style="cursor:pointer;"></i> 
+                                            <i class="fa fa-times fa-4px" aria-hidden="true" (click)="close(field)" style="cursor:pointer;"></i>
+                                    </span>
+                                
+                                </td>
+                        </tr>					
+                 
+                        
+                    </tbody>
+                  </table>
+            </div>    
+          
+           <h3>Notes</h3>
+           <div id="NotesHeading" *ngIf = "!isfetchAllNotes">
+                <div class="row well">
+                    <a style="cursor:pointer" (click)="fetchAllNotes()">View Previous Notes</a> <span style ="float:right">3 of {{notesFound}}</span>
+                </div>
+           </div>
+             
+      
+           <div style = "width:80%;" *ngFor = "let note of notes ">
+                            <div class="row well" *ngIf= "!(temp === note['Note Content'])"> 
+                                <div class="col-md-12" style="padding:0%">
+                                    <pre  style = "overflow: hidden; word-wrap: break-word; display:block; white-space:pre-wrap; background-color:white" >
+                                            <i class="fa fa-pencil" aria-hidden="true" title="Edit" (click) = "isEdited(note['Note Content'])" style ="cursor: pointer">  </i> 
+                                            
+                                            <read-more [text]="note['Note Content']" name="Note Content" [ngModel]="note['Note Content']"  [maxHeight]="150">  </read-more>
+                                    </pre>
+                                </div> 
+                                <!-- <div class="col-md-1">
+                                    <label >
+                                        <i class="glyphicon glyphicon-paperclip" style="cursor:pointer"></i> <input name="Attachment" #photoattachment (change)="onFileAttached($event,note['_id'])" [ngModel]="note['Attachment']" id="photo3" type="file" hidden/>
+                                        
+                                    </label>
+
+                                </div>    -->
+                               
+                                <div  class="col-md-7" style="padding:0%">   
+                                    <form (ngSubmit) = "noteeditDone(z2, note['_id'])" #z2= "ngForm">
+                                        
+                                        <div class="row" >
+                                            <div class="col-md-1">
+                                                <!-- <label >
+                                                    <i class="glyphicon glyphicon-paperclip" style="cursor:pointer"></i> <input  #photo name="Attachment" #photoattachment (change)="onFileAttached($event,note['_id'])" [ngModel]="note['Attachment']" id="photo" type="file" hidden/>
+                                                    
+                                                </label> -->
+            
+                                            </div>   
+                                            <div class="col-md-2" *ngIf="note['_id']===activeNoteTemp" >
+                                                <img *ngIf="!isUploadStarted&&isFileAdded" [src]="previewURL" class ="thumbnail">
+                                            </div>
+                                            <button *ngIf="!isUploadStarted&&isFileAdded&&(note['_id']===activeNoteTemp)" type="submit" class="col-md-2 btn btn-default btn-s"  style="margin-left:10px;margin-top:5px">Upload</button>
+                                            <!-- <button *ngIf="!isUploadStarted&&isFileAdded&&(note['_id']===activeNoteTemp)" type="button" class="col-md-2 btn btn-default btn-s"  style="margin-left:10px;margin-top:5px" (click)="cancelUpload()">Cancel</button> -->
+                                            <button *ngIf="isUploadStarted&&isFileAdded&&(note['_id']===activeNoteTemp)" type="button" class="btn btn-default btn-s"  style="margin-left:10px;margin-top:5px">
+                                                    <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>      
+                                            Uploading....</button>
+                                        </div>
+                                        
+
+                                    </form>  
+                                               
+                                               
+                                </div>
+                                <div class = "col-md-6" >
+                                    <div clas="row">
+                                        <div class ="col-md-1" *ngFor="let imageurl of note['ImageURLS']" style="padding:0%">
+                                            <a [href]="imageurl"> <img [src]="imageurl" class ="thumbnail"> </a>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="col-md-5" style="margin-bottom:5px; border:2px">
+
+                                  
+                                        <div style="font-family:Arial, Helvetica, sans-serif">
+                                            <label>Status : </label>   <span> {{note["Note Status"]}} </span>
+                                        </div>
+                                        <span [title] = "note['Modified Time']" class="fa fa-clock-o" aria-hidden="true" ></span>
+
+                                        <span style="font-family:Arial, Helvetica, sans-serif;font-size:11px"> {{note["Modified Time"]}} </span> <span>  by  {{note["Modified by ID"]}} </span>
+
+                                </div>
+                                
+                            </div>       
+                            <div class="row well"  *ngIf= "(temp === note['Note Content'])">
+                                <form  (ngSubmit) = "noteeditDone(z, note['_id'])" #z= "ngForm" style="padding:0px">
+                                    
+                                    <div style="margin-bottom:2.75%;">
+                                        
+                                        <!-- <label>Issue Type</label>
+                                        <select  name="Issue Type" [ngModel]="note['Issue Type']" style="cursor: pointer; width: 30%;margin-top: 4px" class="form-control">
+                                            <option  *ngFor="let issue of IssueType" [value]="issue"> {{issue}}</option>
+                                        </select>
+                                        <label style="margin-top: 4px">Issue Description</label>
+
+                                        <textarea  name="Issue Description" [ngModel]="note['Issue Description']" style="height:60px; overflow:auto !important; resize:vertical;margin-top: 4px" class="form-control"></textarea>
+                                        
+                                        <label style="margin-top: 4px">TroubleShooting Steps</label>
+
+                                        <textarea  name="TroubleShooting Steps" [ngModel]="note['TroubleShooting Steps']" style="height:60px; overflow:auto !important; resize:vertical;margin-top: 4px" class="form-control"></textarea>
+                                         -->
+                                        <label style="margin-top: 4px">Note Description</label>
+                                        
+                                        <textarea  name="Note Content" [ngModel]="note['Note Content']"  id="" cols="30" rows="10" class="form-control"></textarea>
+
+                                        <div class="col-md-6" style="padding:0%">
+                                            
+                                                 <div>
+                                                    <div class="col-md-1">
+                                                        <!-- <label style="margin-top: 5px"  >
+                                                            <i   class="glyphicon glyphicon-paperclip" style="cursor:pointer"></i> <input #photo name="Attachment" #photoattachment [ngModel]="note['Attachment']" (change)="onFileAttached($event,note['_id'])"  id="photo" type="file" hidden/>
+                                                            
+                                                        </label>   -->
+
+                                                     </div>
+                                                     <div class="col-md-2" style="margin-top: 5px">
+                                                        <img *ngIf="isFileAdded" [src]="previewURL" class ="thumbnail">
+                                                       
+                                                     </div>
+                                                     <!-- <div class ="col-md-9" style="margin-top: 5px">
+                                                        <button *ngIf="!isUploadStarted&&isFileAdded" type="button" class="btn btn-default btn-s" (click)="cancelUpload()">Cancel</button>
+                                                     </div> -->
+                                                 </div>      
+                                        </div> 
+                                        <div class = "col-md-6" >
+                                            <div clas="row" *ngIf="!isFileAdded">
+                                                <div class ="col-md-1" *ngFor="let imageurl of note['ImageURLS']" style="padding:0%">
+                                                    <a [href]="imageurl"> <img [src]="imageurl" class ="thumbnail"> </a>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-md-6"style="padding:0%">
+                                            <button type="submit" class ="btn btn-primary" style="float: right;margin-top:5px">save</button>
+                                            <select  name="Note Status" [ngModel]="note['Note Status']"  style="float:right;cursor: pointer; width: 50%;margin-right: 4px;margin-top:5px" class="form-control">
+                                                <option *ngFor="let status of NoteStatus" [value]="status"> {{status}}</option>
+                                            </select>
+                                            <button type="button" class ="btn btn-default" style="float: right;margin-top:5px;margin-right:4px" (click)="cancelEdit(note['Note Content'])">cancel</button>
+                                        </div>
+                                    </div>    
+                                           
+                                        
+                                </form>
+                            </div>
+                            <br>
+            </div>
+              
+          <div id="NewsNotesInfo">
+            <span *ngIf = "!isNewNotesClicked">Add Notes <i class="fa fa-plus-circle" aria-hidden="true" (click)="newNotes()" style="cursor:pointer"></i> </span>
+            
+                      <!-- <div class="well" *ngIf = "isNewNotesClicked" >
+                            <div style="margin-bottom:2.75%;">
+                                    
+                                    <label>Issue Type</label>
+                                    <select #issueType style="cursor: pointer; width: 30%;margin-top: 4px" class="form-control">
+                                        <option  *ngFor="let issue of IssueType" [value]="issue"> {{issue}}</option>
+                                    </select>
+                                    <label style="margin-top: 4px">Issue Description</label>
+                                    <textarea #issueDescription name="issueDescription" style="height:60px; overflow:auto !important; resize:vertical;margin-top: 4px" class="form-control"></textarea>
+                                    <label style="margin-top: 4px">TroubleShooting Steps</label>
+                                    <textarea #steps name="troubleshootingsteps" style="height:60px; overflow:auto !important; resize:vertical;margin-top: 4px" class="form-control"></textarea>
+                                    <label style="margin-top: 4px">Note Description</label>
+                                    <textarea #description name="newnotes" id="" cols="30" rows="10" class="form-control"></textarea>
+                                    <div class="col-md-5" style="padding:0%">
+                                        <label >
+                                                <i class="glyphicon glyphicon-paperclip" style="cursor:pointer"></i> <input id="photo" #attachment name="attachment" type="file" hidden/>
+                                       </label>
+                                            
+                                             
+                                    </div> 
+                                    <select (change)="addNewNotes(issueType,steps,description,issueDescription,$event,attachment)" style="float:right;cursor: pointer; width: 20%;margin-left: 4px;margin-top:4px;margin-bottom:4px" class="form-control">
+                                        <option *ngFor="let status of NoteStatus" [value]="status"> {{status}}</option>
+                                    </select>
+                                    
+                                    
+                                    <button type="button" class ="btn btn-default" style="float: right;margin-top:4px;margin-bottom:4px" (click)="newNotes()">cancel</button>
+                            </div>       
+                     </div> -->
+                     
+                        <div class="row well" *ngIf = "isNewNotesClicked" >
+                            <form  (ngSubmit) = "addNewNotes(z1)" #z1= "ngForm" style="padding:0px">
+                                <div style="margin-bottom:2.75%;">
+                                    
+                                    <!-- <label>Issue Type</label>
+                                    <select name="Issue Type" [ngModel]="Note['Issue Type']" style="cursor: pointer; width: 30%;margin-top: 4px" class="form-control">
+                                        <option  *ngFor="let issue of IssueType" [value]="issue"> {{issue}}</option>
+                                    </select>
+                                    <label style="margin-top: 4px">Issue Description</label>
+                                    <textarea name="Issue Description" [ngModel]="Note['Issue Description']" style="height:60px; overflow:auto !important; resize:vertical;margin-top: 4px" class="form-control"></textarea>
+                                    <label style="margin-top: 4px">TroubleShooting Steps</label>
+                                    <textarea  name="TroubleShooting Steps" [ngModel]="Note['TroubleShooting Steps']"style="height:60px; overflow:auto !important; resize:vertical;margin-top: 4px" class="form-control"></textarea> -->
+                                    <label style="margin-top: 4px">Note Description</label>
+                                    <textarea name="Note Content" [ngModel]="Note['Note Content']" cols="30" rows="10" class="form-control"></textarea>
+                                    <div class="col-md-5" style="padding:0%">
+                                        
+                                        <div class="row">
+
+                                            <div class="col-md-2" style="padding:0%">
+                                                <!-- <label style="margin-top: 12px"  >
+                                                        <i  class="glyphicon glyphicon-paperclip" style="cursor:pointer"></i> <input #photo name="Attachment" #photoattachment [ngModel]="Note['Attachment']"(change)="onFileAttached($event,1)" id="photo" type="file" hidden/>
+                                                        
+                                                </label>    -->
+                                            </div> 
+                                            <div class="col-md-5">
+                                                <img *ngIf="isFileAdded" [src]="previewURL" class ="thumbnail">
+                                            </div>
+                                            <div class="col-md-5">
+                                                 <!-- <button *ngIf="isFileAdded" type="button" class ="btn btn-default" style="float: right;margin-top:5px;margin-right:4px" (click)="cancelUpload()">cancel</button>    -->
+                                            </div>
+                                            
+                                        </div>
+                                          
+                                    </div> 
+                                    <div class="col-md-2" style="padding:0%">
+                                        
+                                    </div>   
+                                    <div class="col-md-5"style="padding:0%">
+                                        <button type="submit" class ="btn btn-primary" style="float: right;margin-top:5px">save</button>
+                                        <select  name="Note Status" [ngModel]="Note['Note Status']"  style="float:right;cursor: pointer; width: 50%;margin-right: 4px;margin-top:5px" class="form-control">
+                                            <option *ngFor="let status of NoteStatus" [value]="status"> {{status}}</option>
+                                        </select>
+                                        <button type="button" class ="btn btn-default" style="float: right;margin-top:5px;margin-right:4px" (click)="newNotes()">cancel</button>
+                                    </div>
+
+                                    
+                            </div> 
+                             </form>   
+                        </div>
+                         
+          </div>
+          <br>
+          <br>
+          <br>
+          <br>
+
+      

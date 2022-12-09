@@ -1,0 +1,16 @@
+
+      <form class="form-group" (ngSubmit) = "onLogin(f)" #f = "ngForm">
+        <h2 class="form-signin-heading">Login</h2>
+        <label class="sr-only">Email address</label>
+        <input type="email"  class="form-control" name = "email" style="width: 30%" placeholder="Email address" ngModel>
+        <br>
+        <label  class="sr-only">Password</label>
+        <input type="password" name = "password" class="form-control" style="width: 30%" placeholder ="Password" ngModel>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button *ngIf = "!isSigning" class="btn btn-primary" type="submit">Sign in</button>
+        <button *ngIf = "isSigning" class="btn btn-primary" type="button"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Loading.... </button>
+      </form>

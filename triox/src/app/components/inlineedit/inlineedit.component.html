@@ -1,0 +1,13 @@
+<div class="inlineedit" *ngIf= "!isClicked">
+  <span >
+    {{field}}
+    <i class="fa fa-pencil" aria-hidden="true" title="Edit" (click) = "isEdited()" style ="cursor: pointer; float: right">  </i>
+     
+  </span>
+</div>
+
+<form *ngIf= "isClicked" (ngSubmit) = "editDone(a)" #a= "ngForm" (click)="stopPropagation($event)">
+  <input type="text"  [ngModel] = "field" [name] ="property" >
+  <button class ="btn btn-success"  type="submit" >Save</button>
+  <button class ="btn btn-danger" type="button" (click)="cancelEdit()" >Cancel</button>
+</form>

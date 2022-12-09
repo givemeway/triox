@@ -1,0 +1,174 @@
+
+<div class="container">
+    <h3 style="font-family: 'Times New Roman', Times, serif;">All Devices 
+        <i *ngIf = "!loading" class="glyphicon glyphicon-repeat" aria-hidden="true" (click) = "refresh()" style="cursor: pointer"></i>
+        <i *ngIf = "loading" class="fa fa-spinner fa-spin" aria-hidden="true"></i>  
+        
+         <i class="icon-check-empty" aria-hidden="true"></i>
+      </h3>
+
+      <div *ngIf = "showEdit">
+   
+            <button class="btn btn-default" (click) = "download()" > 
+              <span>
+                <img src="assets/cloud-arrow-down-solid.svg" class="img" width="20" height="40" style="cursor:pointer">
+              </span>
+              <span>
+                Download
+              </span>
+            </button>
+            
+            <button class="btn btn-default" (click) = "deleteLead()"> 
+              <span>
+                <img src="assets/trash.svg" class="img" width="20" height="40"  style="cursor:pointer">
+              </span>
+              <span>
+                Delete
+              </span>
+            </button>
+            
+            <button class="btn btn-default" (click) = "cancel()">
+              <span>
+                <img src="assets/rectangle-xmark-solid.svg" class="img" width="20" height="40"  style="cursor:pointer">
+              </span>
+              <span>
+                Cancel
+              </span>
+            </button>
+      </div>    
+
+      <table class="table table-hover table-bordered table-striped" cellpadding="0" cellpadding="0" border="0">
+        <thead style="background-color: lightblue">
+          <tr style="height: 40px;">
+            <th><input id="box1" type="checkbox"/></th>
+            <th style="cursor: pointer" (click)="sortlist('Board Name')" [ngStyle]="{ 'background-color': sortelement=='Board Name'? 'lightgrey': 'lightblue'}">
+              <div *ngIf = "sortelement!='Board Name'"> 
+                             Board Name <i class="fa fa-sort" aria-hidden="true"></i>
+                </div>
+                <div *ngIf = "sortelement=='Board Name'&&sortorder==-1" > 
+
+                            Board Name <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </div>
+                <div *ngIf = "sortelement=='Board Name'&&sortorder==1"> 
+
+                            Board Name <i class="fa fa-caret-up" aria-hidden="true"></i>
+                </div>
+             
+            
+            </th>
+            <th style="cursor: pointer" (click)="sortlist('Device ID')" [ngStyle]="{ 'background-color': sortelement=='Device ID'? 'lightgrey': 'lightblue'}"> 
+                 <div *ngIf = "sortelement!='Device ID'"> 
+                             Device ID <i class="fa fa-sort" aria-hidden="true"></i>
+                 </div>
+                 <div *ngIf = "sortelement=='Device ID'&&sortorder==-1" > 
+
+                             Device ID <i class="fa fa-caret-down" aria-hidden="true"></i>
+                 </div>
+                  <div *ngIf = "sortelement=='Device ID'&&sortorder==1"> 
+
+                            Device ID <i class="fa fa-caret-up" aria-hidden="true"></i>
+                  </div>
+            
+            </th>
+            <th style="cursor: pointer" (click)="sortlist('Time')" [ngStyle]="{ 'background-color': sortelement=='Time'? 'lightgrey': 'lightblue'}"> 
+              <div *ngIf = "sortelement!='Time'"> 
+                          Test Time <i class="fa fa-sort" aria-hidden="true"></i>
+              </div>
+              <div *ngIf = "sortelement=='Time'&&sortorder==-1" > 
+
+                          Test Time <i class="fa fa-caret-down" aria-hidden="true"></i>
+              </div>
+               <div *ngIf = "sortelement=='Time'&&sortorder==1"> 
+
+                         Test Time <i class="fa fa-caret-up" aria-hidden="true"></i>
+               </div>
+         
+            </th>
+            <th>MAC ADDRESS</th>
+            <th>Accelerometer</th>
+            <th>Magnetometer</th>
+            <th>Ultrasound</th>
+            <th>Ultrasound Params</th>
+            <th>Vibrometer</th>
+            <th>WiFi</th>
+            <th>RTD Device 1</th>
+            <th>RTD Device 2</th>
+            <th>RTD Device 3</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor ="let lead of leads" style="height: 20px" >
+            <td> <input id="box1" type="checkbox" [value]="lead['_id']" [checked] = "isCheckBoxChecked" (change)="checkboxclicked(selecteditem)" #selecteditem /></td>
+            <td> <a [routerLink] = "['/auth/show', lead['_id']]">  {{ lead["Board Name"]  }} </a>
+            </td>
+            <td >  {{ lead["Device ID"]  }}
+            </td>
+            <td>{{ lead["Time"]}}
+            </td>
+            <td>{{ lead["MAC ADDRESS"]}}
+            </td>
+            <td>{{lead["Accelerometer"]}}
+            </td>
+            <td>{{ lead["Magnetometer"]}}
+            </td>
+            <td>{{ lead["Ultrasound"]}}
+            </td>
+            <td>{{ lead["Ultrasound Params"]}}
+            </td>
+            <td>{{ lead["Vibrometer"]}}
+            </td>
+            <td>{{ lead["WiFi"]}}
+            </td>
+            <td>{{ lead["RTD Device 1"]}}
+            </td>
+            <td>{{ lead["RTD Device 2"]}}
+            </td>
+            <td>{{ lead["RTD Device 3"]}}
+            </td>
+          </tr>  
+        </tbody>
+      </table>
+     
+</div>
+<div class="container well" style="position: fixed; top: 90%; z-index: 10">
+    <select class="form-group" name="index" (change) = "recordsPerpage($event)" [value]="index" style="float: right; cursor: pointer">
+      <option [value]="10">10 Records per Page</option>
+      <option [value]="20">20 Records per Page</option>
+      <option [value]="30">30 Records per Page</option>
+      <option [value]="40">40 Records per Page</option>
+      <option [value]="50">50 Records per Page</option>
+      <option [value]="100">100 Records per Page</option>
+    </select>
+    
+    <span [hidden] = "noPreviousPage" >
+      <i class="glyphicon glyphicon-chevron-left"  style ="cursor: pointer" (click)="previousPage()"></i>
+    </span>
+    <label>{{ fromIndex }}</label>
+    <span>to</span>
+    <label>{{ toIndex}}</label>
+    <span>
+    
+      <i class="glyphicon glyphicon-chevron-right"  style ="cursor: pointer" (click)="nextPage()"></i>
+    </span>
+    <span *ngFor = "let count of totalCount">
+      <strong>
+       ( Total Count : {{count.count}} )
+      </strong>
+    </span>
+    <!-- <label>
+      ------
+    </label> -->
+    <!-- <span>
+      <strong>
+        {{totalCount[1]._id}} : ${{totalCount[1].total}}
+     </strong>
+     <label>,</label>
+     <strong>
+        Count: {{totalCount[1].count}}
+      </strong>
+
+    </span> -->
+
+</div>
+  <br>
+  <br>

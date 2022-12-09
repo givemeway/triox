@@ -1,0 +1,106 @@
+img {
+    width: 45px;
+    height: 45px;
+}
+.border{
+    border-top-style: solid;
+}
+
+#exampleTextarea {
+    width: 60%;
+    height: 100px;
+}
+#customerOverView{
+    width: 40%;
+    padding: 0px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+#customerInfo{
+    width: 80%;
+    padding: 0px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+#outputtable {
+    width: 80%;
+    padding: 0px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+#salesinfo{
+    width: 80%;
+    padding: 0px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+#Description{
+    width: 80%;
+    padding: 0px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+#NotesInfo{
+    width: 80%;
+    padding: 0px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+#NotesHeading{
+    width: 80%;
+    padding: 0px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+textarea{
+    width: 100%;
+    display:block; 
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.row {
+    
+    margin: 1.5px;
+    padding: 5px;
+    border: 0.5px solid #FAFAFA;
+    
+}
+label {
+    height: 25px;
+}
+h3{
+    font-size: 18px;
+    
+}
+pre{
+    
+    margin-left: 0px;
+}
+.fa.fa-pencil{
+ float: right;
+ display: none;
+}
+.fa.fa-pencil-square-o.fa-4px{
+    float: right;
+    display: none;
+    cursor:pointer;
+}
+
+tr:hover .fa.fa-pencil-square-o.fa-4px{
+    display: block;
+}
+
+div.col-md-8:hover .fa.fa-pencil{
+    display: block;
+}
+   
+div.col-md-4:hover .fa.fa-pencil{
+       display: block;
+}
+pre:hover .fa.fa-pencil{
+    display: block;
+}
+#NewsNotesInfo{
+    width: 80%;
+    padding: 0px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+
+/* test */
+[hidden] {
+    display: none !important;
+  }
+

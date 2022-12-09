@@ -1,0 +1,26 @@
+.container.well {
+    height: 6%;
+}
+.followup {
+    color: white;
+    background-color: black !important;
+    text-align: left;
+}
+
+.refund {
+    color: white;
+    background-color: orange !important;
+    text-align: left;
+}
+
+.void {
+    color: white;
+    background-color: pink !important;
+    text-align: left;
+}
+
+.notconfirmed {
+    color: white;
+    background-color: blue !important;
+    text-align: left;
+}

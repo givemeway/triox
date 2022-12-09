@@ -1,0 +1,200 @@
+<div class="container">  
+    
+    <!-- <div class="row well">
+  <h3 class="text-center">Add Customer</h3>
+</div> -->
+<div class="row well" >
+    <h3 style="font-family: 'Times New Roman', Times, serif;" >PCB Testing Information</h3>
+</div>
+
+<form (ngSubmit) = "createCustomer(info)" #info = "ngForm">
+<div class="row">
+    <!-- first row -->
+    <div class="col-md-2">
+        <label>Board Name</label>
+    </div>
+    <div class="col-md-4">
+        <input #firstName="ngModel" type="text" name="Board Name" ngModel class="form-control" required minlength="4" appForbiddenName=" ">
+        <p *ngIf = "!firstName.valid && firstName.touched" id="invalidFirstName">Board Name can't be blank</p>
+    </div>
+    <div class="col-md-2">
+        <label>Device ID</label>
+    </div>
+    <div class="col-md-4">
+        <input #lastName="ngModel" type="text" name="Device ID" ngModel class="form-control" required minlength="4" appForbiddenName=" ">
+        <p *ngIf = "!lastName.valid && lastName.touched" id="invalidlastName">Device ID can't be blank</p>
+    </div>
+
+
+</div>
+<br>
+<div class="row">
+    <!-- second line -->
+    <div class="col-md-2">
+        <label>MAC ADDRESS</label>
+    </div>
+    <div class="col-md-4">
+        <input #streetAddress = "ngModel" type="text" name="MAC ADDRESS:" ngModel class="form-control" required minlength="8" appForbiddenName=" ">
+        <p *ngIf = "!streetAddress.valid && streetAddress.touched" id="invalidstreetAddress">MAC ADDRESS Can't be blank</p>
+    </div>
+    <div class="col-md-2">
+            <label>WiFi</label>
+        </div>
+        <div class="col-md-4">
+            <select name="WiFi"  #service id="WiFi" [ngModel]="HelpIcon[0]" class="form-control" required (change)="checkboxclicked(service)" >
+                <option *ngFor  ="let help of HelpIcon" [value] = "help" >{{help}}</option>
+            </select>
+        </div>    
+</div>
+<br>
+<div class="row">
+    <!-- third row -->  
+    <div class="col-md-2">
+        <label>Vibrometer</label>
+    </div>
+    <div class="col-md-4">
+        <select name="Vibrometer"  #service id="Vibrometer" [ngModel]="HelpIcon[0]" class="form-control" required (change)="checkboxclicked(service)" >
+            <option *ngFor  ="let help of HelpIcon" [value] = "help" >{{help}}</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label>Magnetometer</label>
+    </div>
+    <div class="col-md-4">
+        <select name="Magnetometer"  #service id="Magnetometer" [ngModel]="HelpIcon[0]" class="form-control" required (change)="checkboxclicked(service)" >
+            <option *ngFor  ="let help of HelpIcon" [value] = "help" >{{help}}</option>
+        </select>
+    </div>
+
+</div>
+<!-- additional row -->
+<!-- <div class="row">
+
+    <div class="col-md-2">
+        <label>Customer Creation date</label>
+    </div>
+    <div class="col-md-4">
+        
+        <ng-datepicker id="datePicker" [options]="options" [(ngModel)] = "date" name="Customer Creation date"> </ng-datepicker>
+
+    </div>
+</div> -->
+<br>
+
+<div class=row>
+
+    <div class="col-md-2">
+        <label>Accelerometer</label>
+    </div>
+    
+    <div class="col-md-4">
+        <select name="Accelerometer"  #service id="Accelerometer" [ngModel]="HelpIcon[0]" class="form-control" required (change)="checkboxclicked(service)" >
+            <option *ngFor  ="let help of HelpIcon" [value] = "help" >{{help}}</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label>Ultra-sound</label>
+    </div>
+    
+    <div class="col-md-4">
+        <select name="Ultra-sound"  #service id="Ultra-sound" [ngModel]="HelpIcon[0]" class="form-control" required (change)="checkboxclicked(service)" >
+            <option *ngFor  ="let help of HelpIcon" [value] = "help" >{{help}}</option>
+        </select>
+    </div>
+    
+</div>
+
+<br >
+<div class='row'>
+    <span *ngIf = "!isNewFieldClicked">Add Fields <i class="fa fa-plus-circle" aria-hidden="true" (click)="newFields()" style="cursor:pointer"></i> </span>
+    <div  *ngIf = "isNewFieldClicked"> 
+
+        <!-- <form (ngSubmit) = "addDone(new)" #new= "ngForm"> -->
+            <div class="col-md-2">
+                <label>Field Name</label>
+            </div>
+            <div class="col-md-2">
+                <input #newField = "ngModel" type="text" name="newField" ngModel class="form-control" style="resize: vertical">
+            </div>
+            <!-- <div class="col-md-2">
+                <label>Field Value</label>
+            </div>
+            <div class="col-md-2">
+                <input type="text" [ngModel] = "new_field_data['FieldValue']" name="FieldValue" class="form-control" style="resize: vertical">
+            </div> -->
+            <button class ="btn btn-success"  type="submit" >Save</button>
+            <button class ="btn btn-danger" type="button" (click)="cancelAdd()" >Cancel</button>
+        <!-- </form> -->
+    </div>
+    
+    <!-- <input #lastName="ngModel" type="text" name="Device ID" ngModel class="form-control" required minlength="4" appForbiddenName=" "> -->
+</div>
+<br>
+<div class="row" *ngFor= "let new of new_field_data">
+    <div class="col-md-2" >
+        <label>{{new}}</label>
+    </div>
+    <div class="col-md-4" >
+        <input type="text" name= {{new}} ngModel class="form-control" required minlength="8" appForbiddenName=" ">
+    </div>
+</div>
+
+<div class="row well">
+    <h3  style="font-family: 'Times New Roman', Times, serif;" >Notes</h3>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <label>Comments</label>
+    </div>
+    <div class="col-md-4">
+        <textarea type="text" name="Description" ngModel class="form-control" required></textarea>
+    </div>
+</div>
+<br>
+<div class="row well">
+
+    <button *ngIf = "!isCustomerCreated"type="submit" [disabled] = "!info.valid"class="btn btn-primary btn-lg">Save</button>
+    <button *ngIf = "isCustomerCreated" class="btn btn-primary" type="button"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Saving.... </button>
+    <button type="reset" class="btn btn-default btn-lg" (click)="cancelCustomer()">Cancel</button>
+ 
+    
+</div>
+
+</form>
+
+    <h1> Add Fields to the Product</h1>  
+      
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">  
+        
+      <!-- <p>  
+        <label for="name">Product Name:</label>  
+        <input type="text" id="name" name="name" formControlName="name" class="form-control">  
+      </p>   -->
+      
+      <table class="table table-bordered" formArrayName="newfields">  
+        <tr>  
+          <th colspan="2">Add Field Names & their values</th>  
+          <th width="150px"><button type="button" (click)="addQuantity()" class="btn btn-primary">Add</button></th>  
+        </tr>  
+        <tr *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">  
+          <td>  
+              Field Name :  
+              <input type="text" formControlName="key" class="form-control">  
+          </td>  
+          <td>  
+              Value:  
+              <input type="text" formControlName="value" class="form-control">  
+          </td>  
+          <td>  
+              <button (click)="removeQuantity(i)" class="btn btn-danger">Remove</button>  
+          </td>  
+        </tr>  
+      </table>  
+       
+      <button type="submit" class="btn btn-success">Submit</button>  
+        
+    </form>  
+        
+    <br/>  
+    {{this.productForm.value | json}}  
+  </div>  

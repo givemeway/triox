@@ -1,0 +1,49 @@
+<div class="container">
+    <table class="table table-hover table-bordered table-striped">
+       <thead>
+         <tr>
+           <th>
+
+           </th>
+           <th>
+              Last Login
+           </th>
+           <th>
+              Last Activity
+           </th>
+           <th>
+              Edit Activity
+           </th>
+         </tr>
+       </thead>
+       <tbody>
+         <tr *ngFor="let login of temploginactivity">
+            
+           <td >
+              {{login['Name']}}
+           </td>
+           <td>
+              <select class="form-control">
+                <option *ngFor = "let detail of login['LoginActivity']">
+                    Logged In from {{detail["GeoAddress"]["city"]}}, {{detail["GeoAddress"]["country_name"]}}. IP({{detail["GeoAddress"]["ip"]}}), Host({{detail["GeoAddress"]["org"]}}) Time: {{detail["GeoAddress"]["LoginTime"]}}
+                 </option>
+              </select>
+           </td>
+            <td>
+                <select class="form-control">
+                    <option *ngFor = "let detail of login['AccessActivity']">
+                       Accessed: {{detail["ParentName"]}} From {{detail["city"]}}, {{detail["country_name"]}} IP({{detail["ip"]}}), Time({{detail["AccessTime"]}}) 
+                     </option>
+                  </select>
+            </td>
+            <td>
+                <select class="form-control">
+                    <option *ngFor = "let detail of login['EditActivity']">
+                       Edited: {{detail["EditedModule"]}} in {{detail["ParentName"]}} From {{detail["city"]}}, {{detail["country_name"]}} IP({{detail["ip"]}}), Time({{detail["EditTime"]}}) 
+                     </option>
+                  </select>
+            </td>
+        </tr>    
+       </tbody>
+    </table>
+</div>
